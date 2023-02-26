@@ -6,15 +6,12 @@ const Users = () => {
 	const [users, setUsers] = useState(api.users.fetchAll());
 
 	const handelDelete = userId => {
-		console.log(
-			setUsers(prevState =>
-				prevState.fill(userId => userId === prevState.userId)
-			)
-		);
-		setUsers(prevState => prevState.filter(user => user !== userId));
+		setUsers(prevState => prevState);
 	};
 
-	const renderPhrase = number => {};
+	const renderPhrase = number => {
+		return users.length;
+	};
 
 	return (
 		<>
@@ -29,20 +26,26 @@ const Users = () => {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>{}</td>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-					</tr>
+					{users.map(item => (
+						<tr key={item._id}>
+							<td>{item.name}</td>
+							<td>{item.profession.name}</td>
+							<td>{item.qualities.map(item => item.name)}</td>
+							<td>{item.completedMeetings}</td>
+							<td>{`${item.rate}/5`}</td>
+							<td
+								className="badge bg-danger  m-2"
+								onClick={() => handelDelete(users)}
+							>
+								delete
+							</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
-			<button
-				className="btn btn-danger btn-sm m-2"
-				onClick={() => handelDelete()}
-			>
+			{/* <button id={users._id} className="btn btn-danger btn-sm m-2">
 				delete
-			</button>
+			</button> */}
 		</>
 	);
 };
